@@ -1,1 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  --color-espresso: #38220f;
+  --color-mocha: #634832;
+  --color-latte: #967259;
+  --color-caramel: #dbc1ac;
+  --color-cream: #f5ede4;
+  --color-offwhite: #fdf8f3;
+}
+
+@layer base {
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+@layer components {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  textarea {
+    @apply w-full rounded-md border border-caramel p-2 bg-white text-espresso focus:border-1 focus:border-mocha focus:outline-none;
+  }
+
+  main {
+    @apply max-w-screen-2xl mx-auto;
+  }
+
+  nav {
+    @apply flex w-full items-center justify-between p-6 transition duration-200;
+  }
+
+  label {
+    @apply block text-espresso text-sm font-medium;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .nav-link {
+    @apply text-white  px-4 py-2 rounded-md hover:bg-cream hover:text-espresso transition-colors duration-200;
+  }
+
+  .title {
+    @apply text-center text-xl md:text-4xl font-bold text-black my-6;
+  }
+
+  .primary-btn {
+    @apply bg-espresso text-white w-full py-3 rounded-lg cursor-pointer hover:bg-mocha font-bold;
+  }
+
+  .error {
+    @apply text-red-600 text-sm leading-9 w-full;
+  }
+
+  .card {
+    @apply p-8 py-10 rounded-md shadow-md min-w-sm;
+  }
+
+  .card-title {
+    @apply text-center text-xl md:text-3xl font-bold text-black;
+  }
+}
