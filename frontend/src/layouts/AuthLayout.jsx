@@ -1,16 +1,16 @@
-import GuestHeader from "../shared/Nav/GuestHeader";
+import AuthHeader from "../shared/Nav/AuthHeader";
 import useAuthContext from "../context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function GuestLayout() {
+export default function AuthLayout() {
   const { user, loading } = useAuthContext();
 
   if (loading) return <div>Loading...</div>;
-  if (!loading && user) return <Navigate to="/dashboard" />;
+  if (!user) return <Navigate to="/login" />;
 
   return (
     <>
-      <GuestHeader />
+      <AuthHeader />
       <main>
         <Outlet />
       </main>

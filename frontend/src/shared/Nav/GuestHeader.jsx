@@ -7,6 +7,7 @@ export default function GuestHeader() {
         <Link to="/" className="nav-link">
           Home
         </Link>
+
         <Link to="/login" className="nav-link">
           Login
         </Link>

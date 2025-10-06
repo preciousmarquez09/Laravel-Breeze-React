@@ -24,12 +24,9 @@
   input[type="search"],
   input[type="tel"],
   input[type="url"],
+  input[type="date"],
   textarea {
-    @apply w-full rounded-md border border-caramel p-2 bg-white text-espresso focus:border-1 focus:border-mocha focus:outline-none;
-  }
-
-  main {
-    @apply max-w-screen-2xl mx-auto;
+    @apply w-full rounded-md border border-caramel p-2 bg-white placeholder:text-sm placeholder:italic text-espresso focus:border-1 focus:border-mocha focus:outline-none;
   }
 
   nav {
@@ -37,7 +34,7 @@
   }
 
   label {
-    @apply block text-espresso text-sm font-medium;
+    @apply block text-latte text-sm font-semibold;
   }
 
   .flex-center {
@@ -57,11 +54,11 @@
   }
 
   .error {
-    @apply text-red-600 text-sm leading-9 w-full;
+    @apply text-red-600 text-xs;
   }
 
   .card {
-    @apply p-8 py-10 rounded-md shadow-md min-w-sm;
+    @apply p-5 md:p-8 py-10 rounded-md shadow-md;
   }
 
   .card-title {
