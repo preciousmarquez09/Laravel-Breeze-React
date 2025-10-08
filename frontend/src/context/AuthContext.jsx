@@ -8,18 +8,13 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
-  const csrf = () => api.get("/sanctum/csrf-cookie");
 
   const getUser = async () => {
-    setLoading(true);
     try {
-      console.log("Fetching user...");
       const { data } = await api.get("/api/user");
-      console.log("User data:", data);
       setUser(data);
-    } catch (e) {
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
@@ -27,49 +22,54 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getUser();
+    const token = localStorage.getItem("token");
+    if (token) getUser();
+    else setLoading(false);
   }, []);
 
   const login = async ({ email, password }) => {
-    await csrf();
     setErrors([]);
     try {
-      await api.post("/login", { email, password });
-      await getUser();
+      const { data } = await api.post("/api/login", { email, password });
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
       navigate("/dashboard");
     } catch (e) {
-      setErrors(e.response?.data?.errors || ["Something went wrong"]);
-      console.error(e.response?.data?.errors);
+      setErrors(e.response?.data?.errors || ["Invalid credentials"]);
     }
   };
 
-  const register = async ({ formData }) => {
-    await csrf();
+  const register = async (formData) => {
     setErrors([]);
     try {
-      await api.post("/register", formData);
-      await getUser();
+      const { data } = await api.post("/api/register", formData);
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
       navigate("/dashboard");
     } catch (e) {
-      setErrors(e.response?.data?.errors || ["Something went wrong"]);
-      console.error(e.response?.data?.errors);
+      setErrors(e.response?.data?.errors || ["Registration failed"]);
     }
   };
 
   const logout = async () => {
-    await api.post("logout").then(() => {
+    try {
+      await api.post("/api/logout");
+    } finally {
+      localStorage.removeItem("token");
       setUser(null);
-    });
+      navigate("/login");
+    }
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, errors, getUser, login, register, logout, loading }}
+      value={{ user, errors, loading, login, register, logout }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
+
 export default function useAuthContext() {
   return useContext(AuthContext);
 }
